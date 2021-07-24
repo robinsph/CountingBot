@@ -1,0 +1,5 @@
+Online: 2021-07-21 08:55:58
+  File "bot_prod.py", line 56
+    async def on_ready():
+        ^
+SyntaxError: invalid syntax

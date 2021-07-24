@@ -37,7 +37,7 @@ from utils import generate_ban_time_string
 '''
 
 
-DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
+DISCORD_TOKEN = 'ODM5OTk2NDQ0NzU2NDEwNDAx.YJRxpg.u8qgL0pOES-wwagF_VpRVmqvNyA'
 
 engine = db.create_engine("sqlite:///database.db")
 connection = engine.connect()
@@ -144,7 +144,8 @@ async def on_message(message):
         await message.add_reaction("👎")
 
         skip_ban = False
-        if bot.get_channel(message.channel.id).permissions_for(message.author).administrator or message.author.id == 640961770407723009:
+        counting_admin = 867497301206892575
+        if counting_admin in [role.id for role in message.author.roles]:
             skip_ban = True
         
         if skip_ban == False:
