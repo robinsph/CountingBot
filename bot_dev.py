@@ -37,7 +37,7 @@ from utils import generate_ban_time_string
 '''
 
 
-DISCORD_TOKEN = 'ODM5OTk2NDQ0NzU2NDEwNDAx.YJRxpg.u8qgL0pOES-wwagF_VpRVmqvNyA'
+DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
 
 engine = db.create_engine("sqlite:///database_dev.db")
 connection = engine.connect()
