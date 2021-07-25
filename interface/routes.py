@@ -70,3 +70,5 @@ def inputs():
     inputs = input.query.limit(50)
     return render_template('inputs.html', inputs = inputs) 
 
+if __name__ == "__main__":
+  app.run(host='0.0.0.0')
