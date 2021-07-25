@@ -21,7 +21,7 @@ def users():
 
 @app.route('/bans', methods = ['GET', 'POST'])
 def bans():
-    bans = ban.query.all()
+    bans = db.session.query(ban, user).join(user, ban.USER_ID == user.USER_ID).all()
     return render_template('bans.html', bans = bans)  
 
 @app.route('/insults', methods = ['GET', 'POST'])
@@ -67,5 +67,5 @@ def new():
 
 @app.route('/inputs', methods = ['GET', 'POST'])
 def inputs():
-    inputs = input.query.order_by(input.INPUT_ID.desc()).limit(50)
+    inputs = db.session.query(input, user).join(user, input.USER_ID == user.USER_ID).order_by(input.INPUT_ID.desc()).limit(50)
     return render_template('inputs.html', inputs = inputs) 

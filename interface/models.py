@@ -9,22 +9,22 @@ class state(db.Model):
 
 class user(db.Model):
     USER_ID = db.Column(db.Integer, primary_key = True)
+    DISCORD_ID = db.Column(db.String)
     CHANNEL_ID = db.Column(db.Integer)
-    HASH_ID = db.Column(db.String)
     USER_NAME = db.Column(db.String)
     CREATE_DATE = db.Column(db.DateTime)
     UPDATE_DATE = db.Column(db.DateTime)
 
 class input(db.Model):
     INPUT_ID = db.Column(db.Integer, primary_key = True)
-    HASH_ID = db.Column(db.String)
+    USER_ID = db.Column(db.Integer, db.ForeignKey('user.USER_ID'))
     USER_INPUT = db.Column(db.String)
     CORRECT_INPUT = db.Column(db.Integer)
     CREATE_DATE = db.Column(db.DateTime)
 
 class ban(db.Model):
     BAN_ID = db.Column(db.Integer, primary_key = True)
-    HASH_ID = db.Column(db.String)
+    USER_ID = db.Column(db.String, db.ForeignKey('user.USER_ID'))
     BAN_DATE = db.Column(db.DateTime)
     UNBAN_DATE = db.Column(db.DateTime)
     INDEFINITE_BAN = db.Column(db.Integer)

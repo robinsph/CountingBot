@@ -7,6 +7,3 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../database_prod.db'
 db = SQLAlchemy(app)
 
 from interface import routes
-
-if __name__ == "__main__":
-  app.run(host='0.0.0.0',debug=True)

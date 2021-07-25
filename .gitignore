@@ -1,6 +1,7 @@
 #Project Specific
 venv
 *.db
+*.sqbpro
 test.py
 .vscode
 

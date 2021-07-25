@@ -4,7 +4,7 @@
     <thead>
         <tr>
             <th>BAN ID</th>
-            <th>HASH ID</th>
+            <th>USER</th>
             <th>BAN DATE</th>
             <th>UNBAN DATE</th>
             <th>INDEFINITE BAN</th>
@@ -16,14 +16,14 @@
     <tbody>
         {%for ban in bans%}
             <tr>
-                <td>{{ ban.BAN_ID }}</td>
-                <td>{{ ban.HASH_ID }}</td>
-                <td>{{ ban.BAN_DATE }}</td>
-                <td>{{ ban.UNBAN_DATE }}</td>
-                <td>{{ ban.INDEFINITE_BAN }}</td>
-                <td>{{ ban.CURRENTLY_BANNED }}</td>
-                <td>{{ ban.CREATE_DATE }}</td>
-                <td>{{ ban.UPDATE_DATE }}</td>
+                <td>{{ ban.ban.BAN_ID}}</td>
+                <td>{{ ban.user.USER_NAME}}</td>
+                <td>{{ ban.ban.BAN_DATE}}</td>
+                <td>{{ ban.ban.UNBAN_DATE}}</td>
+                <td>{{ ban.ban.INDEFINITE_BAN}}</td>
+                <td>{{ ban.ban.CURRENTLY_BANNED}}</td>
+                <td>{{ ban.ban.CREATE_DATE}}</td>
+                <td>{{ ban.ban.UPDATE_DATE}}</td>
             </tr>
         {% endfor %}
     </tbody>

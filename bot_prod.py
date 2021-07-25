@@ -14,9 +14,9 @@ import time
 from utils import generate_ban_time_string
 
 '''
-    Counting Bot Version 2.0.0
+    Counting Bot Version 2.1.0
     Created: 2021-07-14
-    Updated: 2021-07-21
+    Updated: 2021-07-25
     
     Phil Robinson
     Seattle, WA
@@ -26,17 +26,17 @@ from utils import generate_ban_time_string
     will be timed out from the channel for an amount of time determined by the number of times that user has submitted and incorrect input.
     Lastly, Counting Bot will run a cron job every minute to determine if the timeout has expired. 
 
+    NEW for Version 2.1.0
+        - Created User Interface for intercting with database
+        - Moved database off of NAS
 
-    TODO for Version 2.0.1
-        - Change from NAS storage to git repo; disk i/o error for saving table
+    TODO for Version 2.1.1
+        - Create interface for unbanning indefinite bans
+
+    TODO for Version 2.2.0
         - Change from sqlite to Postgres SQL
-    
-    TODO for Version 2.1.0
-        - Create new insults
-
+            
 '''
-
-
 DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
 
 engine = db.create_engine("sqlite:///database_prod.db")
@@ -85,25 +85,20 @@ async def on_message(message):
     else:
         current_value = result.CURRENT_STATE
 
-    hash_id = sha256()
-
-    hash_id.update(str(message.author.id).encode('ascii'))
-    hash_id.update(str(message.channel.id).encode('ascii'))
-
-    hash_id = hash_id.hexdigest()
-
     query = db.select([user]).where(db.and_(
-                                            user.columns.HASH_ID == hash_id
+                                            user.columns.DISCORD_ID == message.author.id,
+                                            user.columns.CHANNEL_ID == message.channel.id
                                             )
                                     )
     result = connection.execute(query).first()
 
+    user_id = result.USER_ID
+
     if result is None:
         query = db.insert(user)
         values = [{
-            'USER_ID': message.author.id,
+            'DISCORD_ID': message.author.id,
             'CHANNEL_ID': message.channel.id,
-            'HASH_ID': hash_id,
             'USER_NAME': message.author.name,
             'CREATE_DATE': datetime.datetime.now(),
             'UPDATE_DATE': datetime.datetime.now()
@@ -114,7 +109,8 @@ async def on_message(message):
         user_name = result.USER_NAME
         if user_name != message.author.name:
             query = db.update(user).where(db.and_(
-                                                   user.columns.HASH_ID == hash_id
+                                                    user.columns.DISCORD_ID == message.author.id,
+                                                    user.columns.CHANNEL_ID == message.channel.id
                                                  )
                                         )
             values = [{
@@ -144,6 +140,7 @@ async def on_message(message):
         await message.add_reaction("👎")
 
         skip_ban = False
+
         counting_admin = 867497301206892575
         if counting_admin in [role.id for role in message.author.roles]:
             skip_ban = True
@@ -168,7 +165,7 @@ async def on_message(message):
                 '''
 
                 query = db.select([input]).where(db.and_(
-                                                input.columns.HASH_ID == hash_id,
+                                                user.columns.USER_ID == user_id,
                                                 input.columns.CORRECT_INPUT == 0
                                                 )
                                         )
@@ -176,14 +173,13 @@ async def on_message(message):
 
                 incorrect_inputs = len(result)
 
-
                 ban_time = ((500/(1+math.e**(5+(-.45)*incorrect_inputs)))+0.25*incorrect_inputs)*3600
                 ban_time = int(ban_time)
 
                 unban_date = datetime.datetime.now() + datetime.timedelta(seconds=ban_time)
 
                 query = db.insert(ban)
-                values = [{ 'HASH_ID': hash_id,
+                values = [{ 'USER_ID': user_id,
                             'BAN_DATE': datetime.datetime.now(),
                             'UNBAN_DATE': unban_date,
                             'INDEFINITE_BAN': 0,
@@ -197,7 +193,7 @@ async def on_message(message):
                 await message.channel.send(f"See you in {ban_string}!")
             else:
                 query = db.insert(ban)
-                values = [{ 'HASH_ID': hash_id,
+                values = [{ 'USER_ID': user_id,
                             'BAN_DATE': datetime.datetime.now(),
                             'UNBAN_DATE': None,
                             'INDEFINITE_BAN': 1,
@@ -213,7 +209,7 @@ async def on_message(message):
     '''
     query = db.insert(input)
     values = [{
-                'HASH_ID': hash_id, 
+                'USER_ID': user_id, 
                 'USER_INPUT': message.content, 
                 'CORRECT_INPUT': correct,
                 'CREATE_DATE': datetime.datetime.now()
@@ -234,16 +230,16 @@ async def attime():
         date_difference = banned_user.UNBAN_DATE - datetime.datetime.now()
         seconds_difference = date_difference.total_seconds()
         if seconds_difference <= 0:
-            banned_hash_id = banned_user.HASH_ID
-            query = db.select([user]).where(user.columns.HASH_ID == banned_hash_id)
+            banned_user_id = banned_user.USER_ID
+            query = db.select([user]).where(user.columns.USER_ID == banned_user_id)
             interior_result = connection.execute(query).first()
 
 
             channel_id = await bot.fetch_channel(interior_result.CHANNEL_ID)
-            user_id = await bot.fetch_user(interior_result.USER_ID)
+            user_id = await bot.fetch_user(interior_result.DISCORD_ID)
             await channel_id.set_permissions(user_id, send_messages = True)
             query = db.update(ban).where(db.and_(
-                                                 ban.columns.HASH_ID == banned_hash_id,
+                                                 ban.columns.USER_ID == banned_user_id,
                                                 )
                                         )
             values = [{

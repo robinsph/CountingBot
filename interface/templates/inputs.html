@@ -4,7 +4,7 @@
     <thead>
         <tr>
             <th>INPUT ID</th>
-            <th>HASH ID</th>
+            <th>USER NAME</th>
             <th>USER INPUT</th>
             <th>CORRECT INPUT</th>
             <th>CREATE DATE</th>
@@ -13,11 +13,11 @@
     <tbody>
         {%for input in inputs%}
             <tr>
-                <td>{{ input.INPUT_ID }}</td>
-                <td>{{ input.HASH_ID }}</td>
-                <td>{{ input.USER_INPUT }}</td>
-                <td>{{ input.CORRECT_INPUT }}</td>
-                <td>{{ input.CREATE_DATE }}</td>
+                <td>{{ input.input.INPUT_ID }}</td>
+                <td>{{ input.user.USER_NAME }}</td>
+                <td>{{ input.input.USER_INPUT }}</td>
+                <td>{{ input.input.CORRECT_INPUT }}</td>
+                <td>{{ input.input.CREATE_DATE }}</td>
             </tr>
         {% endfor %}
     </tbody>
