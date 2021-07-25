@@ -67,5 +67,5 @@ def new():
 
 @app.route('/inputs', methods = ['GET', 'POST'])
 def inputs():
-    inputs = input.query.limit(50)
+    inputs = input.query.order_by(input.INPUT_ID.desc()).limit(50)
     return render_template('inputs.html', inputs = inputs) 
