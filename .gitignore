@@ -1,6 +1,6 @@
 #Project Specific
 venv
-database_prod.db
+*.db
 test.py
 .vscode
 
