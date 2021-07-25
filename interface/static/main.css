@@ -1,0 +1,130 @@
+a {
+  color: white;
+}
+
+a:hover {
+  color: white;
+}
+
+.container {
+  max-width: 95%;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #009879;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover:not(.active) {
+  background-color: white;
+  color: #009879;
+}
+
+.active {
+  background-color: #009879;
+}
+
+.fa-pen {
+  color: black
+}
+
+
+
+.styled-table {
+  border-collapse: collapse;
+  margin: 100px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  min-width: 100%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.styled-table thead tr {
+  background-color: #009879;
+  color: #ffffff;
+  text-align: left;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+}
+
+
+.styled-table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+
+.styled-table tbody tr:last-of-type {
+  border-bottom: 2px solid #009879;
+}
+
+.styled-table tr:hover {
+  background-color: #009879;
+  color: white;
+}
+
+
+.styled-table tbody tr.active-row{
+  font-weight: bold;
+  color: #009879;
+}
+
+.insultform{
+  border-collapse: collapse;
+  margin: 100px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  min-width: 100%;
+  /* margin-left: 20%; */
+  margin-right: 20%;
+}
+
+.form-control{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-radius:5px;
+  border:solid #009879;
+}
+
+.textarea{
+  height:150px;
+}
+
+.btn{
+  background-color: #009879;
+  color: white;
+}
+
+input[type='checkbox'] {
+  -webkit-appearance:none;
+  width:30px;
+  height:30px;
+  background:white;
+  border-radius:5px;
+  border:solid #009879;
+}
+input[type='checkbox']:checked {
+  background: #009879;
+}
+
+.new-device{
+  margin-top: 20px;
+  margin-bottom: -70px;
+}

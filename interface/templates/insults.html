@@ -1,0 +1,48 @@
+{% extends "layout.html"%}
+{% block content %}
+<a href="new"><button class='btn new-device'>New Insult</button></a>
+<table class="styled-table">
+    <thead>
+        <tr>
+            <th>INSULT ID</th>
+            <th>INSULT TEXT</th>
+            <th>INSULT FILE</th>
+            <th>USER REFERENCED</th>
+            <th>ACTIVE</th>
+            <th>INDEFINITE BAN</th>
+            <th>CREATE DATE</th>
+            <th>UPDATE DATE</th>
+            <th></th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {%for insult in insults%}
+
+            <tr>
+                <a href="home">
+                    <td>{{ insult.INSULT_ID }}</td>
+                    {% if insult.INSULT_TEXT|length > 70 %}
+                        <td>{{ insult.INSULT_TEXT[:70] + "..."}}</td>
+                    {% else %}
+                        <td>{{ insult.INSULT_TEXT}}</td>
+                    {% endif %}
+                    <td>{{ insult.INSULT_FILE }}</td>
+                    <td>{{ insult.USER_REFERENCED }}</td>
+                    <td>{{ insult.ACTIVE }}</td>
+                    <td>{{ insult.INDEFINITE_BAN }}</td>
+                    <td>{{ insult.CREATE_DATE }}</td>
+                    <td>{{ insult.UPDATE_DATE }}</td>
+                    <td>
+                        <a href="{{ url_for('insult_edit', id = insult['INSULT_ID'])}}">
+                            <i class="fas fa-pen"></i>
+                        </a>
+                    </td>
+                </a>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}
+
+

@@ -1,0 +1,27 @@
+{% extends "layout.html"%}
+{% block content %}
+<table class="styled-table">
+    <thead>
+        <tr>
+            <th>INPUT ID</th>
+            <th>HASH ID</th>
+            <th>USER INPUT</th>
+            <th>CORRECT INPUT</th>
+            <th>CREATE DATE</th>
+        </tr>
+    </thead>
+    <tbody>
+        {%for input in inputs%}
+            <tr>
+                <td>{{ input.INPUT_ID }}</td>
+                <td>{{ input.HASH_ID }}</td>
+                <td>{{ input.USER_INPUT }}</td>
+                <td>{{ input.CORRECT_INPUT }}</td>
+                <td>{{ input.CREATE_DATE }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}
+
+

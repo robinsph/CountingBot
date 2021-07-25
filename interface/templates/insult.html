@@ -1,0 +1,26 @@
+{% extends "layout.html"%}
+{% block content %}
+<form class='insultform' action="" method="post" role="form">
+    {{ form.hidden_tag() }}
+
+    <textarea type="text" name='INSULT_TEXT' class='textarea form-control' class="form-control">{{ insult.INSULT_TEXT }}</textarea>	
+    <input type="text" name ='INSULT_FILE' class="form-control" value="{{ insult.INSULT_FILE }}"></input>	
+    <input type="text" name='USER_REFERENCED' class="form-control" value="{{ insult.USER_REFERENCED }}"></input>
+    <div>
+        <input type="checkbox" id="scales" value=1 name="ACTIVE">
+        <label for="scales">Active</label>
+      </div>
+      
+      <div>
+        <input type="checkbox" id="horns" value=1 name="INDEFINITE_BAN">
+        <label for="horns">Indefinite Ban</label>
+      </div>
+    
+
+    <center>
+        <button type="submit" class="btn btn-success">Submit</button>
+    </center>
+</form>
+{% endblock content %}
+
+

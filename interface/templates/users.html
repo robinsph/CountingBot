@@ -1,0 +1,29 @@
+{% extends "layout.html"%}
+{% block content %}
+<table class="styled-table">
+    <thead>
+        <tr>
+            <th>USER ID</th>
+            <th>CHANNEL ID</th>
+            <th>HASH INPUT</th>
+            <th>USER name</th>
+            <th>CREATE DATE</th>
+            <th>UPDATE DATE</th>
+        </tr>
+    </thead>
+    <tbody>
+        {%for user in users%}
+            <tr>
+                <td>{{ user.USER_ID }}</td>
+                <td>{{ user.CHANNEL_ID }}</td>
+                <td>{{ user.HASH_ID }}</td>
+                <td>{{ user.USER_NAME }}</td>
+                <td>{{ user.CREATE_DATE }}</td>
+                <td>{{ user.UPDATE_DATE }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}
+
+

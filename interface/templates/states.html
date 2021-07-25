@@ -1,0 +1,27 @@
+{% extends "layout.html"%}
+{% block content %}
+<table class="styled-table">
+    <thead>
+        <tr>
+            <th>STATE ID</th>
+            <th>CHANNEL ID</th>
+            <th>CURRENT STATE</th>
+            <th>CREATE DATE</th>
+            <th>UPDATE DATE</th>
+        </tr>
+    </thead>
+    <tbody>
+        {%for state in states%}
+            <tr>
+                <td>{{ state.STATE_ID }}</td>
+                <td>{{ state.CHANNEL_ID }}</td>
+                <td>{{ state.CURRENT_STATE }}</td>
+                <td>{{ state.CREATE_DATE }}</td>
+                <td>{{ state.UPDATE_DATE }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}
+
+
