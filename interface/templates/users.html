@@ -16,8 +16,8 @@
                 <td>{{ user.USER_ID }}</td>
                 <td>{{ user.CHANNEL_ID }}</td>
                 <td>{{ user.USER_NAME }}</td>
-                <td>{{ user.CREATE_DATE }}</td>
-                <td>{{ user.UPDATE_DATE }}</td>
+                <td>{{ user.CREATE_DATE.strftime('%Y-%m-%d  %H:%M:%S') }}</td>
+                <td>{{ user.UPDATE_DATE.strftime('%Y-%m-%d  %H:%M:%S') }}</td>
             </tr>
         {% endfor %}
     </tbody>

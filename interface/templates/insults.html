@@ -31,8 +31,8 @@
                     <td>{{ insult.USER_REFERENCED }}</td>
                     <td>{{ insult.ACTIVE }}</td>
                     <td>{{ insult.INDEFINITE_BAN }}</td>
-                    <td>{{ insult.CREATE_DATE }}</td>
-                    <td>{{ insult.UPDATE_DATE }}</td>
+                    <td>{{ insult.CREATE_DATE.strftime('%Y-%m-%d  %H:%M:%S') }}</td>
+                    <td>{{ insult.UPDATE_DATE.strftime('%Y-%m-%d  %H:%M:%S') }}</td>
                     <td>
                         <a href="{{ url_for('insult_edit', id = insult['INSULT_ID'])}}">
                             <i class="fas fa-pen"></i>

@@ -11,6 +11,7 @@
             <th>CURRENTLY BANNED</th>
             <th>CREATE DATE</th>
             <th>UPDATE DATE</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -24,6 +25,15 @@
                 <td>{{ ban.ban.CURRENTLY_BANNED}}</td>
                 <td>{{ ban.ban.CREATE_DATE}}</td>
                 <td>{{ ban.ban.UPDATE_DATE}}</td>
+                <td>
+                    <form action="" method="post" class="center-form-icon">
+                        {% if ban.ban.CURRENTLY_BANNED == 1 %}
+                            <button type="submit" class="fabutton" name="{{ban.ban.BAN_ID}}">
+                                <i class="fas fa-trash fa-1x"></i>
+                            </button>
+                        {% endif %}
+                    </form>
+                </td>
             </tr>
         {% endfor %}
     </tbody>

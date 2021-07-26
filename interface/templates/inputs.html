@@ -15,9 +15,13 @@
             <tr>
                 <td>{{ input.input.INPUT_ID }}</td>
                 <td>{{ input.user.USER_NAME }}</td>
-                <td>{{ input.input.USER_INPUT }}</td>
+                {% if input.input.USER_INPUT|length > 70 %}
+                    <td>{{ input.input.USER_INPUT[:70] + "..."}}</td>
+                {% else %}
+                    <td>{{ input.input.USER_INPUT}}</td>
+                {% endif %}
                 <td>{{ input.input.CORRECT_INPUT }}</td>
-                <td>{{ input.input.CREATE_DATE }}</td>
+                <td>{{ input.input.CREATE_DATE.strftime('%Y-%m-%d  %H:%M:%S') }}</td>
             </tr>
         {% endfor %}
     </tbody>

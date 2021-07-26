@@ -21,6 +21,12 @@ def users():
 
 @app.route('/bans', methods = ['GET', 'POST'])
 def bans():
+    if request.method == 'POST':
+        id = [_ for _ in request.form.keys()][0]
+        ban_id = ban.query.filter(ban.BAN_ID == id).first()
+        ban_id.CURRENTLY_BANNED = 0
+        db.session.commit()
+        return redirect(url_for('bans')) 
     bans = db.session.query(ban, user).join(user, ban.USER_ID == user.USER_ID).all()
     return render_template('bans.html', bans = bans)  
 
