@@ -30,12 +30,19 @@ def bans():
     bans = db.session.query(ban, user).join(user, ban.USER_ID == user.USER_ID).all()
     return render_template('bans.html', bans = bans)  
 
+@app.route('/delete/<id>', methods = ['GET', 'POST'])
+def delete(id):
+    ban_id = ban.query.filter(ban.BAN_ID == id).first()
+    ban_id.CURRENTLY_BANNED = 0
+    db.session.commit()
+    return redirect(url_for('bans'))
+
 @app.route('/insults', methods = ['GET', 'POST'])
 def insults():
     insults = insult.query.all()
     return render_template('insults.html', insults = insults)  
 
-@app.route('/<id>', methods = ['GET', 'POST'])
+@app.route('/insults/<id>', methods = ['GET', 'POST'])
 def insult_edit(id):
 
     form = InsultForm()

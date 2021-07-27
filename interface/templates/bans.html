@@ -28,9 +28,7 @@
                 <td>
                     <form action="" method="post" class="center-form-icon">
                         {% if ban.ban.CURRENTLY_BANNED == 1 %}
-                            <button type="submit" class="fabutton" name="{{ban.ban.BAN_ID}}">
-                                <i class="fas fa-trash fa-1x"></i>
-                            </button>
+                            <a href="/delete/{{ ban.ban.BAN_ID }}"><i class="fas fa-trash"></i></a>
                         {% endif %}
                     </form>
                 </td>

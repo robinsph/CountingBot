@@ -34,7 +34,7 @@
                     <td>{{ insult.CREATE_DATE.strftime('%Y-%m-%d  %H:%M:%S') }}</td>
                     <td>{{ insult.UPDATE_DATE.strftime('%Y-%m-%d  %H:%M:%S') }}</td>
                     <td>
-                        <a href="{{ url_for('insult_edit', id = insult['INSULT_ID'])}}">
+                        <a href="/insults/{{ insult.INSULT_ID }}">
                             <i class="fas fa-pen"></i>
                         </a>
                     </td>

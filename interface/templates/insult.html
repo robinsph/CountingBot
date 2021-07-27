@@ -7,13 +7,13 @@
     <input type="text" name ='INSULT_FILE' class="form-control" value="{{ insult.INSULT_FILE }}"></input>	
     <input type="text" name='USER_REFERENCED' class="form-control" value="{{ insult.USER_REFERENCED }}"></input>
     <div>
-        <input type="checkbox" id="scales" value=1 name="ACTIVE">
-        <label for="scales">Active</label>
+        <input type="checkbox"  value=1 name="ACTIVE" {{ 'checked' if insult.ACTIVE }}>
+        <label >Active</label>
       </div>
       
       <div>
-        <input type="checkbox" id="horns" value=1 name="INDEFINITE_BAN">
-        <label for="horns">Indefinite Ban</label>
+        <input type="checkbox"  value=1 name="INDEFINITE_BAN" {{ 'checked' if insult.INDEFINITE_BAN }}>
+        <label >Indefinite Ban</label>
       </div>
     
 
