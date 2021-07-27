@@ -136,7 +136,6 @@ async def on_message(message):
                                              state.columns.CHANNEL_ID == message.channel.id
                                             )
                                         )
-        result = connection.execute(query).first()
         values = [{
                     'CURRENT_STATE': current_value + 1, 
                     'UPDATE_DATE': datetime.datetime.now()
