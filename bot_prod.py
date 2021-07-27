@@ -39,7 +39,7 @@ from utils import generate_ban_time_string
 '''
 DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
 
-engine = db.create_engine("sqlite:///database_prod.db")
+engine = db.create_engine("sqlite:///database_dev.db")
 connection = engine.connect()
 metadata = db.MetaData()
 ban = db.Table('ban', metadata, autoload=True, autoload_with=engine)
@@ -92,8 +92,6 @@ async def on_message(message):
                                     )
     result = connection.execute(query).first()
 
-    user_id = result.USER_ID
-
     if result is None:
         query = db.insert(user)
         values = [{
@@ -105,7 +103,16 @@ async def on_message(message):
                  }]
         connection.execute(query,values)
 
+        query = db.select([user]).where(db.and_(
+                                            user.columns.DISCORD_ID == message.author.id,
+                                            user.columns.CHANNEL_ID == message.channel.id
+                                            )
+                                    )
+        result = connection.execute(query).first()
+        user_id = result.USER_ID
+
     else:
+        user_id = result.USER_ID
         user_name = result.USER_NAME
         if user_name != message.author.name:
             query = db.update(user).where(db.and_(
@@ -125,7 +132,8 @@ async def on_message(message):
         await message.add_reaction("✔️")
         
         query = db.update(state).where(db.and_(
-                                               state.columns.CHANNEL_ID == message.channel.id
+                                               input.columns.USER_ID == user_id,
+                                               input.columns.CORRECT_INPUT == 0
                                               )
                                        )
         values = [{

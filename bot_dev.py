@@ -163,16 +163,19 @@ async def on_message(message):
                     https://www.desmos.com/calculator/6uvw2vrslv
 
                 '''
-
+                print(user_id)
                 query = db.select([input]).where(db.and_(
-                                                user.columns.USER_ID == user_id,
+                                                input.columns.USER_ID == user_id,
                                                 input.columns.CORRECT_INPUT == 0
                                                 )
                                         )
                 result = connection.execute(query).fetchall()
 
-                incorrect_inputs = len(result)
+                print(len(result))
+                for i in result:
+                    print(i)
 
+                incorrect_inputs = len(result)
                 ban_time = ((500/(1+math.e**(5+(-.45)*incorrect_inputs)))+0.25*incorrect_inputs)*3600
                 ban_time = int(ban_time)
 
