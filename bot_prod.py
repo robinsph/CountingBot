@@ -158,11 +158,11 @@ async def on_message(message):
             query = db.select([insult]).where(insult.columns.ACTIVE == 1).order_by(db.func.random())
             result = connection.execute(query).first()
 
-            if result.INSULT_TEXT is not None and result.INSULT_FILE is not None:
-                await message.channel.send(content = result.INSULT_TEXT, file=discord.File(os.path.join('assets', result.INSULT_FILE)))
-            elif result.INSULT_TEXT is not None:
+            # if result.INSULT_TEXT is not None and result.INSULT_FILE != 'None':
+                # await message.channel.send(content = result.INSULT_TEXT, file=discord.File(os.path.join('assets', result.INSULT_FILE)))
+            if result.INSULT_TEXT != 'None':
                 await message.channel.send(result.INSULT_TEXT)
-            elif result.INSULT_FILE is not None:
+            elif result.INSULT_FILE != 'None':
                 await message.channel.send(file=discord.File(os.path.join('assets', result.INSULT_FILE)))
 
             if result.INDEFINITE_BAN == 0:
@@ -173,7 +173,7 @@ async def on_message(message):
                 '''
 
                 query = db.select([input]).where(db.and_(
-                                                user.columns.USER_ID == user_id,
+                                                input.columns.USER_ID == user_id,
                                                 input.columns.CORRECT_INPUT == 0
                                                 )
                                         )

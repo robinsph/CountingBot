@@ -39,7 +39,7 @@ from utils import generate_ban_time_string
 
 DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
 
-engine = db.create_engine("sqlite:///database_dev.db")
+engine = db.create_engine("sqlite:///database_prod.db")
 connection = engine.connect()
 metadata = db.MetaData()
 ban = db.Table('ban', metadata, autoload=True, autoload_with=engine)
@@ -150,11 +150,16 @@ async def on_message(message):
             query = db.select([insult]).where(insult.columns.ACTIVE == 1).order_by(db.func.random())
             result = connection.execute(query).first()
 
-            if result.INSULT_TEXT is not None and result.INSULT_FILE is not None:
-                await message.channel.send(content = result.INSULT_TEXT, file=discord.File(os.path.join('assets', result.INSULT_FILE)))
-            elif result.INSULT_TEXT is not None:
+            print(result.INSULT_TEXT)
+
+            # if result.INSULT_TEXT is not None and result.INSULT_FILE != 'None':
+                # print(">1")
+                # await message.channel.send(content = result.INSULT_TEXT, file=discord.File(os.path.join('assets', result.INSULT_FILE)))
+            if result.INSULT_TEXT != 'None':
+                print(">2")
                 await message.channel.send(result.INSULT_TEXT)
-            elif result.INSULT_FILE is not None:
+            elif result.INSULT_FILE != 'None':
+                print(">3")
                 await message.channel.send(file=discord.File(os.path.join('assets', result.INSULT_FILE)))
 
             if result.INDEFINITE_BAN == 0:
@@ -171,9 +176,6 @@ async def on_message(message):
                                         )
                 result = connection.execute(query).fetchall()
 
-                print(len(result))
-                for i in result:
-                    print(i)
 
                 incorrect_inputs = len(result)
                 ban_time = ((500/(1+math.e**(5+(-.45)*incorrect_inputs)))+0.25*incorrect_inputs)*3600
