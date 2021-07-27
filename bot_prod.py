@@ -13,6 +13,8 @@ import sqlalchemy as db
 import time
 from utils import generate_ban_time_string
 
+DISCORD_TOKEN = os.getenv('DISCORD_TOKEN_PROD')
+
 '''
     Counting Bot Version 2.1.0
     Created: 2021-07-14
@@ -37,7 +39,6 @@ from utils import generate_ban_time_string
         - Change from sqlite to Postgres SQL
             
 '''
-DISCORD_TOKEN = os.getenv('DISCORD_TOKEN_PROD')
 
 engine = db.create_engine("sqlite:///database_prod.db")
 connection = engine.connect()
@@ -131,11 +132,11 @@ async def on_message(message):
         correct = 1
         await message.add_reaction("✔️")
         
-        query = db.update(state).where(db.and_(
-                                               input.columns.USER_ID == user_id,
-                                               input.columns.CORRECT_INPUT == 0
-                                              )
-                                       )
+        query = db.select([state]).where(db.and_(
+                                             state.columns.CHANNEL_ID == message.channel.id
+                                            )
+                                    )
+        result = connection.execute(query).first()
         values = [{
                     'CURRENT_STATE': current_value + 1, 
                     'UPDATE_DATE': datetime.datetime.now()
