@@ -132,10 +132,10 @@ async def on_message(message):
         correct = 1
         await message.add_reaction("✔️")
         
-        query = db.select([state]).where(db.and_(
+        query = db.update(state).where(db.and_(
                                              state.columns.CHANNEL_ID == message.channel.id
                                             )
-                                    )
+                                        )
         result = connection.execute(query).first()
         values = [{
                     'CURRENT_STATE': current_value + 1, 
